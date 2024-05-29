@@ -25,5 +25,14 @@ sd(df$Value, na.rm = T)
 sd(df$MDL, na.rm = T)
 sd(df$RDL, na.rm = T)
 
-# Filtro de Hampel
+df[(df$Value > (3*sd(df$Value, na.rm=T) + mean(df$Value,na.rm=T))) | (df$Value < (12*sd(df$Value, na.rm=T) - mean(df$Value,na.rm=T))), ]
+df[(df$MDL > (3*sd(df$MDL, na.rm=T) + mean(df$MDL,na.rm=T))) | (df$MDL < (12*sd(df$MDL, na.rm=T) - mean(df$MDL,na.rm=T))), ]
+df[(df$RDL > (3*sd(df$RDL, na.rm=T) + mean(df$RDL,na.rm=T))) | (df$RDL < (12*sd(df$RDL, na.rm=T) - mean(df$RDL,na.rm=T))), ]
+
+df$Value <- replace(df$Value, (df$Value>(3*sd(df$Value)+mean(df$Value))| df$Value<(12*sd(df$Value)-mean(df$Value))), NA )
+df$MDL <- replace(df$MDL, (df$MDL>(3*sd(df$MDL)+mean(df$MDL))| df$MDL<(12*sd(df$MDL)-mean(df$MDL))), NA )
+df$RDL <- replace(df$RDL, (df$RDL>(3*sd(df$RDL)+mean(df$RDL))| df$RDL<(12*sd(df$RDL)-mean(df$RDL))), NA )
+
+
+write.csv(df, "DF_DC_out.csv")
 
